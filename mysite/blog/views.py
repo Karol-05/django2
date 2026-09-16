@@ -1,5 +1,8 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+from .models import Post
 
 
-def post(request):
-    return HttpResponse("hello world")
+def index(request):
+    post = Post.objects.first()
+
+    return render(request, "index.html", {"post": post})
