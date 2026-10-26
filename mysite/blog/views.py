@@ -1,24 +1,13 @@
-from django.http import HttpResponse
-from django.template import loader
-from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404, render
 
-@csrf_exempt
-def update(request):
-    if request.method == "POST":
-        '''
-        pass the path of the diectory where your project will be
-        stored on PythonAnywhere in the git.Repo() as parameter.
-        Here the name of my directory is "test.pythonanywhere.com"
-        '''
-        repo = git.Repo('/home/drsantos20/path('', views.hello_world, name='index'),')
-        origin = repo.remotes.origin
-
-        origin.pull()
-        return HttpResponse("Updated code on PythonAnywhere")
-    else:
-        return HttpResponse("Couldn't update the code on PythonAnywhere")
+from .models import Post
 
 
-def hello_world(request):
-    template = loader.get_template('index.html')
-    return HttpResponse(template.render())
+def index(request):
+    posts = Post.objects.filter(status=1).order_by("-created_on")
+    return render(request, "index.html", {"posts": posts})
+
+
+def post_detail(request, slug):
+    post = get_object_or_404(Post, slug=slug, status=1)
+    return render(request, "post_detail.html", {"post": post})

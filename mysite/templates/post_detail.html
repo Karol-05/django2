@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<main>
+    <article>
+        <h2>{{ post.title }}</h2>
+
+        <p>
+            Por {{ post.author }} em {{ post.created_on|date:"d/m/Y" }}
+        </p>
+
+        <div style="margin-top: 25px; line-height: 1.7;">
+            {{ post.content|linebreaks }}
+        </div>
+
+        <p style="margin-top: 25px;">
+            <a href="{% url 'index' %}">Voltar às postagens</a>
+        </p>
+    </article>
+</main>
+{% endblock %}
