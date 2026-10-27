@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Postagens{% endblock %}
+
+{% block content %}
+<main>
+    <h2>Postagens publicadas</h2>
+
+    {% for post in posts %}
+        <article>
+            <h3>
+                <a href="{{ post.get_absolute_url }}">
+                    {{ post.title }}
+                </a>
+            </h3>
+
+            <p>
+                Por {{ post.author }} em {{ post.created_on|date:"d/m/Y" }}
+            </p>
+
+            <p>{{ post.content|truncatewords:30 }}</p>
+
+            <a href="{{ post.get_absolute_url }}">Ler postagem</a>
+        </article>
+    {% empty %}
+        <p>Ainda não há postagens publicadas.</p>
+    {% endfor %}
+</main>
+{% endblock %}
